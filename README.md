@@ -19,5 +19,9 @@
   - *_override.tf.json
   - .terraformrc
   - terraform.rc
+## Задание 2.3.1
+  Добавлены файлы:
+  - [merge.sh](branching/merge.sh)
+  - [rebase.sh](branching/rebase.sh)
 
 _Студент: Дмитрий Ю._
