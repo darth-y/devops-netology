@@ -24,4 +24,6 @@
   - [merge.sh](branching/merge.sh)
   - [rebase.sh](branching/rebase.sh)
 
+Внесены изменения в [merge.sh](branching/merge.sh) на ветке `git-merge`
+
 _Студент: Дмитрий Ю._
