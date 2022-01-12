@@ -6,28 +6,38 @@
     * предусмотрите возможность добавления опций к запускаемому процессу через внешний файл (посмотрите, например, на `systemctl cat cron`),
     * удостоверьтесь, что с помощью systemctl процесс корректно стартует, завершается, а после перезагрузки автоматически поднимается.
 
-```
-vagrant@vagrant:~$ systemctl cat node_exporter
-# /etc/systemd/system/node_exporter.service
+```bash
+root@vagrant:~# systemctl cat node_exporter@
+# /etc/systemd/system/node_exporter@.service
 [Unit]
-Description=Daemon for node_exporter on host %H
+Description=Daemon for node_exporter on host %H with option %i
 Documentation=https://github.com/prometheus/node_exporter
 After=network.target
 
 [Service]
 Environment=LOG_FILE=/tmp/node_exporter.log
-ExecStart=/opt/node_exporter/1.3.1/node_exporter
+#ExecStart=/opt/node_exporter/1.3.1/node_exporter
+ExecStart=/bin/bash -c '/opt/node_exporter/1.3.1/node_exporter  --log.level=%i'
 KillMode=process
 Restart=always
 
 [Install]
 WantedBy=multi-user.target
-vagrant@vagrant:~$
-vagrant@vagrant:~$ sudo ps ax | grep node_
-   2266 ?        Ssl    0:00 /opt/node_exporter/1.3.1/node_exporter
-   2281 pts/0    S+     0:00 grep --color=auto node_
-vagrant@vagrant:~$ sudo cat /proc/2266/environ
-LANG=en_US.UTF-8PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/binINVOCATION_ID=249264ade7a84b7b908352b6ccce51cfJOURNAL_STREAM=9:39274LOG_FILE=/tmp/node_exporter.log
+root@vagrant:~# systemctl daemon-reload
+root@vagrant:~# systemctl start node_exporter@warn
+root@vagrant:~# systemctl status node_exporter@warn
+● node_exporter@warn.service - Daemon for node_exporter on host vagrant with option warn
+     Loaded: loaded (/etc/systemd/system/node_exporter@.service; enabled; vendor preset: enabled)
+     Active: active (running) since Wed 2022-01-12 23:14:22 MSK; 39s ago
+       Docs: https://github.com/prometheus/node_exporter
+   Main PID: 3588 (node_exporter)
+      Tasks: 5 (limit: 1071)
+     Memory: 2.5M
+     CGroup: /system.slice/system-node_exporter.slice/node_exporter@warn.service
+             └─3588 /opt/node_exporter/1.3.1/node_exporter --log.level=warn
+
+Jan 12 23:14:22 vagrant systemd[1]: Started Daemon for node_exporter on host vagrant with option warn.
+Jan 12 23:14:22 vagrant bash[3588]: ts=2022-01-12T20:14:22.618Z caller=node_exporter.go:185 level=war>
 ```
 	
 1. Ознакомьтесь с опциями node_exporter и выводом `/metrics` по-умолчанию. Приведите несколько опций, которые вы бы выбрали для базового мониторинга хоста по CPU, памяти, диску и сети.
