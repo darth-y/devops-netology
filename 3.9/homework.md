@@ -63,8 +63,8 @@ and check to make sure that only the key(s) you wanted were added.
 6. Переименуйте файлы ключей из задания 5. Настройте файл конфигурации SSH клиента, так чтобы вход на удаленный сервер осуществлялся по имени сервера.
 
 ```bash
-vagrant@vagrant:~$ mv .ssh/id_rsa{,_new}
-vagrant@vagrant:~$ mv .ssh/id_rsa{,_new}.pub
+vagrant@vagrant:~$ cp .ssh/id_rsa{,_new}
+vagrant@vagrant:~$ cp .ssh/id_rsa{,_new}.pub
 vagrant@vagrant:~$ touch ~/.ssh/config && chmod 600 ~/.ssh/config
 vagrant@vagrant:~$ cat .ssh/config
 Host 10.0.2.15
