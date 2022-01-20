@@ -36,13 +36,25 @@ for result in result_os.split('\n'):
 ```
 
 ### Ваш скрипт:
+Убрал неиспользуемую переменную `is_change` и исправил пути/локализацию под своё окружение.
 ```python
-???
+#!/usr/bin/env python3
+
+import os
+
+bash_command = ["cd /home/user/Документы/devops-netology", "git status"]
+result_os = os.popen(' && '.join(bash_command)).read()
+for result in result_os.split('\n'):
+    if result.find('изменено') != -1:
+        prepare_result = result.replace('\tизменено:      ', '/home/user/Документы/devops-netology/')
+        print(prepare_result)
 ```
 
 ### Вывод скрипта при запуске при тестировании:
-```
-???
+```bash
+❯ ~/wip_4.2.2.py
+/home/user/Документы/devops-netology/.gitignore
+/home/user/Документы/devops-netology/4.2/homework.md
 ```
 
 ## Обязательная задача 3
@@ -50,12 +62,45 @@ for result in result_os.split('\n'):
 
 ### Ваш скрипт:
 ```python
-???
+#!/usr/bin/env python3
+
+import os
+import sys
+
+if len(sys.argv) < 2:
+    print("Using current dir: %s"%(os.getcwd()))
+    git_dir = os.getcwd()
+elif len(sys.argv) > 2:
+    print("We use only one path at moment!")
+    sys.exit()
+else:
+    print("Using argument dir: %s"%(sys.argv[1]))
+    git_dir = sys.argv[1]
+
+bash_command = ["cd " + git_dir, "git status"]
+result_os = os.popen(' && '.join(bash_command)).read()
+for result in result_os.split('\n'):
+    if result.find('изменено') != -1:
+        prepare_result = result.replace('\tизменено:      ', '/home/user/Документы/devops-netology/')
+        print(prepare_result)
 ```
 
 ### Вывод скрипта при запуске при тестировании:
-```
-???
+```bash
+❯ ./wip_4.2.2.py
+Using current dir: /home/user
+fatal: не найден git репозиторий (или один из его каталогов вплоть до точки монтирования /)
+Останавливаю поиск на границе файловой системы (так как GIT_DISCOVERY_ACROSS_FILESYSTEM не установлен).
+❯ ./wip_4.2.2.py /tmp /var
+We use only one path at moment!
+❯ ./wip_4.2.2.py /opt
+Using argument dir: /opt
+fatal: не найден git репозиторий (или один из родительских каталогов): .git
+❯ ./wip_4.2.2.py /home/user/Документы/devops-netology/
+Using argument dir: /home/user/Документы/devops-netology/
+/home/user/Документы/devops-netology/.gitignore
+/home/user/Документы/devops-netology/4.2/homework.md
+
 ```
 
 ## Обязательная задача 4
