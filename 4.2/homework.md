@@ -106,13 +106,53 @@ Using argument dir: /home/user/Документы/devops-netology/
 1. Наша команда разрабатывает несколько веб-сервисов, доступных по http. Мы точно знаем, что на их стенде нет никакой балансировки, кластеризации, за DNS прячется конкретный IP сервера, где установлен сервис. Проблема в том, что отдел, занимающийся нашей инфраструктурой очень часто меняет нам сервера, поэтому IP меняются примерно раз в неделю, при этом сервисы сохраняют за собой DNS имена. Это бы совсем никого не беспокоило, если бы несколько раз сервера не уезжали в такой сегмент сети нашей компании, который недоступен для разработчиков. Мы хотим написать скрипт, который опрашивает веб-сервисы, получает их IP, выводит информацию в стандартный вывод в виде: <URL сервиса> - <его IP>. Также, должна быть реализована возможность проверки текущего IP сервиса c его IP из предыдущей проверки. Если проверка будет провалена - оповестить об этом в стандартный вывод сообщением: [ERROR] <URL сервиса> IP mismatch: <старый IP> <Новый IP>. Будем считать, что наша разработка реализовала сервисы: `drive.google.com`, `mail.google.com`, `google.com`.
 
 ### Ваш скрипт:
+Позволил себе добавить `sleep` для удобства работы
 ```python
-???
+#!/usr/bin/env python3
+import socket
+from datetime import datetime
+from time import sleep
+
+time_start = datetime.now()
+print(datetime.now(),"Script started working")
+services = {'drive.google.com':'0.0.0.0', 'mail.google.com':'0.0.0.0', 'google.com':'0.0.0.0'}
+
+# Первичный сбор IP сервисов
+for service in services:
+    services[service] = socket.gethostbyname(service)
+
+while True:
+    for service in services:
+        ip = socket.gethostbyname(service)
+        if services[service] != ip:
+            print(datetime.now(),"[ERROR]", service,"IP mismatch!", services[service],"==>", ip)
+            services[service] = ip
+        else:
+            print(datetime.now(), "[INFO]", service, "IP is:", services[service])
+    sleep(5)
 ```
 
 ### Вывод скрипта при запуске при тестировании:
 ```
-???
+2022-01-21 22:38:30.356395 Script started working
+2022-01-21 22:38:30.388576 [INFO] drive.google.com IP is: 64.233.165.102
+2022-01-21 22:38:30.389585 [INFO] mail.google.com IP is: 74.125.131.83
+2022-01-21 22:38:30.389585 [INFO] google.com IP is: 209.85.233.139
+2022-01-21 22:38:35.394183 [INFO] drive.google.com IP is: 64.233.165.102
+2022-01-21 22:38:35.395159 [ERROR] mail.google.com IP mismatch! 74.125.131.83 ==> 234.234.234.234
+2022-01-21 22:38:35.397217 [INFO] google.com IP is: 209.85.233.139
+2022-01-21 22:38:40.398109 [ERROR] drive.google.com IP mismatch! 64.233.165.102 ==> 123.123.123.123
+2022-01-21 22:38:40.398109 [INFO] mail.google.com IP is: 234.234.234.234
+2022-01-21 22:38:40.401040 [INFO] google.com IP is: 209.85.233.139
+2022-01-21 22:38:45.402922 [ERROR] drive.google.com IP mismatch! 123.123.123.123 ==> 123.125.123.123
+2022-01-21 22:38:45.402922 [INFO] mail.google.com IP is: 234.234.234.234
+2022-01-21 22:38:45.448785 [INFO] google.com IP is: 209.85.233.139
+2022-01-21 22:38:50.449501 [INFO] drive.google.com IP is: 123.125.123.123
+2022-01-21 22:38:50.450443 [INFO] mail.google.com IP is: 234.234.234.234
+2022-01-21 22:38:50.451419 [INFO] google.com IP is: 209.85.233.139
+2022-01-21 22:38:55.496640 [ERROR] drive.google.com IP mismatch! 123.125.123.123 ==> 64.233.165.102
+2022-01-21 22:38:55.543418 [ERROR] mail.google.com IP mismatch! 234.234.234.234 ==> 74.125.131.17
+2022-01-21 22:38:55.545363 [INFO] google.com IP is: 209.85.233.139
 ```
 
 ## Дополнительное задание (со звездочкой*) - необязательно к выполнению
