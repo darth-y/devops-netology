@@ -100,7 +100,6 @@ fatal: не найден git репозиторий (или один из род
 Using argument dir: /home/user/Документы/devops-netology/
 /home/user/Документы/devops-netology/.gitignore
 /home/user/Документы/devops-netology/4.2/homework.md
-
 ```
 
 ## Обязательная задача 4
