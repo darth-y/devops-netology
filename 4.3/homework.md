@@ -8,11 +8,11 @@
         "elements" :[
             { "name" : "first",
             "type" : "server",
-            "ip" : 7175 
+            "ip" : 7175 <=========== Тут вообще не IP
             }
             { "name" : "second",
             "type" : "proxy",
-            "ip : 71.78.22.43
+            "ip" : "71.78.22.43" <== Тут были потеряны кавычки "
             }
         ]
     }
@@ -24,22 +24,63 @@
 
 ### Ваш скрипт:
 ```python
-???
+#!/usr/bin/env python3
+import json
+import yaml
+import socket
+from datetime import datetime
+from time import sleep
+
+time_start = datetime.now()
+print(datetime.now(),"Script started working")
+services = {'drive.google.com':'0.0.0.0', 'mail.google.com':'0.0.0.0', 'google.com':'0.0.0.0'}
+
+# Первичный сбор IP сервисов
+for service in services:
+    services[service] = socket.gethostbyname(service)
+with open('wip_4.3.2.json', 'w') as out_json:
+    out_json.write(json.dumps(services))
+with open('wip_4.3.2.yaml', 'w') as out_yaml:
+    yaml.dump(services, out_yaml)
+while True:
+    for service in services:
+        ip = socket.gethostbyname(service)
+        if services[service] != ip:
+            print(datetime.now(),"[ERROR]", service,"IP mismatch!", services[service],"==>", ip)
+            services[service] = ip
+            with open('wip_4.3.2.json', 'w') as out_json:
+                out_json.write(json.dumps(services))
+            with open('wip_4.3.2.yaml', 'w') as out_yaml:
+                yaml.dump(services, out_yaml)
+        else:
+            print(datetime.now(), "[INFO]", service, "IP is:", services[service])
+    sleep(5)
 ```
 
 ### Вывод скрипта при запуске при тестировании:
 ```
-???
+2022-01-21 23:11:03.647447 Script started working
+2022-01-21 23:11:03.671848 [INFO] drive.google.com IP is: 64.233.165.100
+2022-01-21 23:11:03.672825 [INFO] mail.google.com IP is: 74.125.131.83
+2022-01-21 23:11:03.672825 [INFO] google.com IP is: 209.85.233.113
+2022-01-21 23:11:08.720699 [INFO] drive.google.com IP is: 64.233.165.100
+2022-01-21 23:11:08.721675 [ERROR] mail.google.com IP mismatch! 74.125.131.83 ==> 234.234.234.234
+2022-01-21 23:11:08.771463 [INFO] google.com IP is: 209.85.233.113
+2022-01-21 23:11:13.771502 [INFO] drive.google.com IP is: 64.233.165.100
+2022-01-21 23:11:13.772479 [INFO] mail.google.com IP is: 234.234.234.234
+2022-01-21 23:11:13.772479 [INFO] google.com IP is: 209.85.233.113
 ```
 
 ### json-файл(ы), который(е) записал ваш скрипт:
 ```json
-???
+{"drive.google.com": "64.233.165.100", "mail.google.com": "234.234.234.234", "google.com": "209.85.233.113"}
 ```
 
 ### yml-файл(ы), который(е) записал ваш скрипт:
 ```yaml
-???
+drive.google.com: 64.233.165.100
+google.com: 209.85.233.113
+mail.google.com: 234.234.234.234
 ```
 
 ## Дополнительное задание (со звездочкой*) - необязательно к выполнению
