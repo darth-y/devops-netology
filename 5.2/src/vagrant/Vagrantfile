@@ -12,8 +12,8 @@ servers = [
     :ip => NET + "11",
     :ssh_host => "20011",
     :ssh_vm => "22",
-    :ram => 2048,
-    :core => 2
+    :ram => 1024,
+    :core => 1
   }
 ]
 

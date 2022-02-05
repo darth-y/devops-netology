@@ -1,3 +1,4 @@
 # Ignore PyCharm IDE dir
 **/.idea/
+**/.vagrant/
 **/wip_*
