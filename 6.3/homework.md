@@ -93,4 +93,4 @@ Query OK, 0 rows affected, 1 warning (0.01 sec)
 Приведите в ответе измененный файл `my.cnf`.
 
 Ответ:  
-[](./my.cnf)
+[my.cnf](./my.cnf)
