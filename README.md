@@ -95,4 +95,7 @@
 ## 6.4. PostgreSQL
 Ответы на это домашнее задание приведены в [homework.md](6.4/homework.md)
 
+## 6.6. Troubleshooting
+Ответы на это домашнее задание приведены в [homework.md](6.6/homework.md)
+
 _Студент: Дмитрий Ю._
