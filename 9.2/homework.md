@@ -1,4 +1,4 @@
-# CI\CD
+# 9.2. CI\CD
 
 ## Знакомоство с SonarQube
 
