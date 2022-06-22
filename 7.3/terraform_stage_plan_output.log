@@ -1,0 +1,117 @@
+❯ terraform workspace new stage
+Created and switched to workspace "stage"!
+
+You're now on a new, empty workspace. Workspaces isolate their state,
+so if you run "terraform plan" Terraform will not see any existing state
+for this configuration.
+❯ terraform plan
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # yandex_compute_instance.ubuntu-node[0] will be created
+  + resource "yandex_compute_instance" "ubuntu-node" {
+      + allow_stopping_for_update = true
+      + created_at                = (known after apply)
+      + description               = "stage node for 7.3 HW"
+      + folder_id                 = (known after apply)
+      + fqdn                      = (known after apply)
+      + hostname                  = "ubu-node-stage-01"
+      + id                        = (known after apply)
+      + metadata                  = {
+          + "ssh-keys" = <<-EOT
+                ubuntu:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC+bGqmbRA0W4e9aFDVdITWGK3NMdugzozA00ZKsIbU1k5zCI5nzcL7CfZJLkt8mqng1JU+tFucXWmACgCHH8i5NairXcoW70XlUv3kPoOfkU0/hHyVhz1CQYJ9Cgd2vw180uk8OWoDSOs6KjiloXkDFcLfKyo5cizrj2bE1PIihdmCvoXzvh5bwKLHU9uvtXZLTKooqtVccKihQ5GZ61XFJX3j+UEftvoxUuS9A45lwQKyes43I7uZtZivPylMMwjMh4vHWu6ypUO6B/p+wrOFHwYXH4u78DMZKkamOOgZqARipxT+N3WODKDdDlbjxzSH7J9Ytb9KKvj6V5kaZMv9F2a8r+AI1ySBzpB6a8Ob6ofoA560xuthEowvr06bL3S0bTbZ+JBDage2qHqzGWvOf8IOf8yD701/ET3H1brB+WOzmRTuK333OtsMm/tR+FpsE6RIBQIp+a+uKCzIUbVH3/serfiTWZ3oCckhBTCXUCSL2ikH5yg//tvIKwfjuIU= user@lab
+            EOT
+        }
+      + name                      = "ubu-node-stage-01"
+      + network_acceleration_type = "standard"
+      + platform_id               = "standard-v1"
+      + service_account_id        = (known after apply)
+      + status                    = (known after apply)
+      + zone                      = "ru-central1-c"
+
+      + boot_disk {
+          + auto_delete = true
+          + device_name = (known after apply)
+          + disk_id     = (known after apply)
+          + mode        = (known after apply)
+
+          + initialize_params {
+              + block_size  = (known after apply)
+              + description = (known after apply)
+              + image_id    = "fd87tirk5i8vitv9uuo1"
+              + name        = (known after apply)
+              + size        = (known after apply)
+              + snapshot_id = (known after apply)
+              + type        = "network-hdd"
+            }
+        }
+
+      + network_interface {
+          + index              = (known after apply)
+          + ip_address         = "192.168.201.11"
+          + ipv4               = true
+          + ipv6               = (known after apply)
+          + ipv6_address       = (known after apply)
+          + mac_address        = (known after apply)
+          + nat                = true
+          + nat_ip_address     = (known after apply)
+          + nat_ip_version     = (known after apply)
+          + security_group_ids = (known after apply)
+          + subnet_id          = (known after apply)
+        }
+
+      + placement_policy {
+          + host_affinity_rules = (known after apply)
+          + placement_group_id  = (known after apply)
+        }
+
+      + resources {
+          + core_fraction = 100
+          + cores         = 2
+          + memory        = 2
+        }
+
+      + scheduling_policy {
+          + preemptible = (known after apply)
+        }
+    }
+
+  # yandex_vpc_network.ubu-net will be created
+  + resource "yandex_vpc_network" "ubu-net" {
+      + created_at                = (known after apply)
+      + default_security_group_id = (known after apply)
+      + folder_id                 = (known after apply)
+      + id                        = (known after apply)
+      + labels                    = (known after apply)
+      + name                      = "net-stage}"
+      + subnet_ids                = (known after apply)
+    }
+
+  # yandex_vpc_subnet.ubu-subnet will be created
+  + resource "yandex_vpc_subnet" "ubu-subnet" {
+      + created_at     = (known after apply)
+      + folder_id      = (known after apply)
+      + id             = (known after apply)
+      + labels         = (known after apply)
+      + name           = "subnet-stage"
+      + network_id     = (known after apply)
+      + v4_cidr_blocks = [
+          + "192.168.201.0/24",
+        ]
+      + v6_cidr_blocks = (known after apply)
+      + zone           = "ru-central1-c"
+    }
+
+Plan: 3 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + external_ip_address_ubuntu-node = [
+      + (known after apply),
+    ]
+  + internal_ip_address_ubuntu-node = [
+      + "192.168.201.11",
+    ]
+

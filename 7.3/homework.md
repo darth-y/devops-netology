@@ -26,6 +26,15 @@ dynamodb.
 жизненного цикла `create_before_destroy = true` в один из рессурсов `aws_instance`.
 1. При желании поэкспериментируйте с другими параметрами и рессурсами.
 
-В виде результата работы пришлите:
-* Вывод команды `terraform workspace list`.
-* Вывод команды `terraform plan` для воркспейса `prod`.  
+## Ответ:  
+Конфигурационные файлы в каталоге [terraform](./terraform)  
+
+Выводы консоли:  
+[terraform_default_output.log](./terraform_default_output.log)  
+[terraform_stage_plan_output.log](./terraform_stage_plan_output.log)  
+[terraform_prod_output.log.log](./terraform_prod_output.log)  
+
+Скриншоты:  
+![](0703_01_default.png)  
+![](0703_02_prod.png)  
+![](0703_03_bucket_env.png)  
