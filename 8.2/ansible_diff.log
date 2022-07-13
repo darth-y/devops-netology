@@ -1,0 +1,76 @@
+   ~/Д/L/N/devops-netology/8.2/playbook    master !1 ?2  ansible-playbook -i inventory/prod.yml site.yml --diff         ✔  18s  
+
+PLAY [Install Java] ************************************************************************************************************************
+
+TASK [Gathering Facts] *********************************************************************************************************************
+ok: [centos7]
+
+TASK [Set facts for Java 11 vars] **********************************************************************************************************
+ok: [centos7]
+
+TASK [Upload .tar.gz file containing binaries from local storage] **************************************************************************
+ok: [centos7]
+
+TASK [Ensure installation dir exists] ******************************************************************************************************
+ok: [centos7]
+
+TASK [Extract java in the installation directory] ******************************************************************************************
+skipping: [centos7]
+
+TASK [Export environment variables] ********************************************************************************************************
+ok: [centos7]
+
+PLAY [Install Elasticsearch] ***************************************************************************************************************
+
+TASK [Gathering Facts] *********************************************************************************************************************
+ok: [centos7]
+
+TASK [Upload tar.gz Elasticsearch from remote URL] *****************************************************************************************
+ok: [centos7]
+
+TASK [Create directrory for Elasticsearch] *************************************************************************************************
+ok: [centos7]
+
+TASK [Extract Elasticsearch in the installation directory] *********************************************************************************
+skipping: [centos7]
+
+TASK [Set environment Elastic] *************************************************************************************************************
+ok: [centos7]
+
+PLAY [Install Kibana] **********************************************************************************************************************
+
+TASK [Gathering Facts] *********************************************************************************************************************
+ok: [centos7]
+
+TASK [Upload tar.gz Kibana from remote URL] ************************************************************************************************
+changed: [centos7]
+
+TASK [Create directrory for Kibana] ********************************************************************************************************
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+     "path": "/opt/kibana/8.3.2",
+-    "state": "absent"
++    "state": "directory"
+ }
+
+changed: [centos7]
+
+TASK [Extract Kibana in the installation directory] ****************************************************************************************
+changed: [centos7]
+
+TASK [Set environment Kibana] **************************************************************************************************************
+--- before
++++ after: /home/yuts/.ansible/tmp/ansible-local-3804224mbafcpu/tmpo3rke5em/kibana.sh.j2
+@@ -0,0 +1,5 @@
++# Warning: This file is Ansible Managed, manual changes will be overwritten on next playbook run.
++#!/usr/bin/env bash
++
++export KIBANA_HOME=/opt/kibana/8.3.2
++export PATH=$PATH:$KIBANA_HOME/bin
+
+changed: [centos7]
+
+PLAY RECAP *********************************************************************************************************************************
+centos7                    : ok=14   changed=4    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0 

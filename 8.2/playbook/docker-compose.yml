@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  centos7:
+    image: centos:7
+    container_name: centos7
+    stdin_open: true
+    tty: true
+    environment:
+      - SSH_SUDO=ALL=(ALL) NOPASSWD:ALL
