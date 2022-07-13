@@ -31,8 +31,9 @@ fatal: [centos7]: FAILED! => {"changed": false, "msg": "dest '/opt/jdk/11.0.15.1
 Ответ: Часть операций пропущена из-за п.8  
 [ansible_diff.log](./ansible_diff.log)
 9. Подготовьте README.md файл по своему playbook. В нём должно быть описано: что делает playbook, какие у него есть параметры и теги.  
-[](./playbook/README.md)
-10. Готовый playbook выложите в свой репозиторий, в ответ предоставьте ссылку на него.
+Ответ: [./playbook/README.md](./playbook/README.md)
+10. Готовый playbook выложите в свой репозиторий, в ответ предоставьте ссылку на него.  
+Ответ: [./playbook/](./playbook/)
 
 ## Необязательная часть
 
