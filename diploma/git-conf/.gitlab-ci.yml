@@ -1,0 +1,36 @@
+stages:
+  - deploy-stage
+
+variables:
+  # Каталог сайта
+  WORDPRESS_SITE_DIR: /var/www/amabam.ru
+  # Каталог (имя) темы
+  WORDPRESS_THEME_NAME: mytheme
+  # Устанавливаемые плагины
+  WORDPRESS_PLUGINS: "ewww-image-optimizer google-sitemap-generator wp-sweep"
+
+deploy-stage:
+  stage: deploy-stage
+  script:
+    # Делаем backup конфига и удаляем из каталога сайта всё, кроме /wp-content/uploads
+    - mkdir -p ~/tmp && cp -r ./wp-content/themes/$WORDPRESS_THEME_NAME ~/tmp
+    - cp $WORDPRESS_SITE_DIR/wp-config.php ~
+    - sudo find $WORDPRESS_SITE_DIR -mindepth 1 ! -regex '^$WORDPRESS_SITE_DIR/wp-content/uploads\(/.*\)?' -delete
+    - sudo cp ~/wp-config.php $WORDPRESS_SITE_DIR
+        
+    # Устанавливаем wordpress и плагины (без тем)
+    - cd $WORDPRESS_SITE_DIR && 
+        sudo wp core download --version=6.0 --skip-content --allow-root &&
+        sudo wp plugin install $WORDPRESS_PLUGINS --allow-root
+    
+    # Копируем темы из репозитория.
+    - sudo mkdir -p $WORDPRESS_SITE_DIR/wp-content/themes/$WORDPRESS_THEME_NAME
+    - sudo cp -r ~/tmp/$WORDPRESS_THEME_NAME $WORDPRESS_SITE_DIR/wp-content/themes/
+
+    # Активируем тему по умолчанию и плагины. 
+    - cd $WORDPRESS_SITE_DIR && 
+        sudo wp theme activate $WORDPRESS_THEME_NAME --allow-root &&
+        sudo wp plugin activate $WORDPRESS_PLUGINS --allow-root 
+
+    # Ставим права на каталоги
+    - sudo chown -R www-data $WORDPRESS_SITE_DIR

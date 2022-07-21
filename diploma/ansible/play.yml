@@ -1,0 +1,77 @@
+---
+-
+  hosts: all
+  become: true
+  become_method: sudo
+  become_user: root
+  remote_user: ubuntu
+  tasks:
+    -
+      name: Copy local hosts file
+      ansible.builtin.copy:
+        src: hosts
+        dest: /etc/hosts
+        owner: root
+        group: root
+        mode: '0644'
+-
+  hosts: proxy
+  become: true
+  become_method: sudo
+  become_user: root
+  remote_user: ubuntu
+  roles:
+    - nginx
+    - nodeexporter
+  vars:
+    nginx_user: www-data
+-
+  hosts: db
+  become: true
+  become_method: sudo
+  become_user: root
+  remote_user: ubuntu
+  roles:
+    - mysql
+    - nodeexporter
+-
+  hosts: app
+  become: true
+  become_method: sudo
+  become_user: root
+  remote_user: ubuntu
+  roles:
+    - wordpress
+    - nodeexporter
+-
+  hosts: git
+  become: true
+  become_method: sudo
+  become_user: root
+  remote_user: ubuntu
+  roles:
+    - gitlab
+    - nodeexporter
+-
+  hosts: monitoring
+  become: true
+  become_method: sudo
+  become_user: root
+  remote_user: ubuntu
+  roles:
+    - monitoring
+    - nodeexporter
+-
+  hosts: proxy
+  become: true
+  become_method: sudo
+  become_user: root
+  remote_user: ubuntu
+  tasks:
+    -
+      name: "nginx restart"
+      service: "name=nginx state=restarted"
+    -
+      name: "Print message"
+      debug:
+        msg: "I think - all done. Check out."

@@ -1,0 +1,57 @@
+---
+-
+  hosts: all
+  remote_user: ubuntu
+  become: true
+  become_method: sudo
+  become_user: root
+  tasks:
+    -
+      name: "Download GitLab repository installation script."
+      get_url:
+        url: "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh"
+        dest: /tmp/gitlab_install_repository.sh
+    -
+      name: "Install GitLab repository."
+      command: "bash /tmp/gitlab_install_repository.sh"
+    -
+      name: "Install GitLab runner"
+      apt:
+        name: gitlab-runner
+        state: present
+    -
+      name: "Register Gitlab runner"
+      become: true
+      command: "gitlab-runner register -n --url http://nl-gitlab --registration-token {{ runner_token }} --executor shell --description \"Shell Runner\" --tag-list deployment"
+    -
+      name: "Add gitlab-runner user to sudoers"
+      user:
+        name: gitlab-runner
+        groups: sudo
+        append: yes
+        state: present
+    -
+      name: "Allow gitlab-runner user to have passwordless sudo"
+      lineinfile:
+        dest: /etc/sudoers
+        line: "gitlab-runner ALL=(ALL) NOPASSWD: ALL"
+        regexp: ^gitlab-runner
+        state: present
+        validate: "visudo -cf %s"
+    -
+      name: "Download Wordpress CLI"
+      get_url:
+        url: "https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
+        dest: /tmp/wp-cli.phar
+    -
+      name: "move the binary to the final destination"
+      copy:
+        src: /tmp/wp-cli.phar
+        dest: /usr/local/bin/wp
+        owner: root
+        group: root
+        mode: 0755
+        remote_src: true
+    -
+      name: "Add local entry to hosts"
+      command: "echo \"$(getent hosts gitlab | awk '{ print $1 }') gitlab.amabam.ru\" | sudo tee -a /etc/hosts"

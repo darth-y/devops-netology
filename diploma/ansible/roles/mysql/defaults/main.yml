@@ -1,0 +1,6 @@
+db_user: wordpress
+db_pass: wordpress
+db_name: wordpress
+mysql_replication_master: nl-db01
+mysql_replication_user: replicator
+mysql_replication_user_password: "H@rd_pas$w0rd"
