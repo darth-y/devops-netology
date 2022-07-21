@@ -9,20 +9,3 @@
 $ cd ansible
 $ ansible-playbook ../git-conf/prepare.yml -i inventory.yml -l app 
 ```
-Для демонстрации CI/CD на Wordpress изменим главную тему. Сейчас при наведении курсора на ссылку она подчеркивается пунктиром:
-  
-![](/screenshots/cicd1.png)  
-
-Изменим файл `wp-content/themes/mytheme/style.css`. Поменяем `text-decoration-style` на `waved`
-  
-![](/screenshots/cicd2.png)  
-  
-После коммита ждем отработки задачи
-  
-![](/screenshots/cicd3.png)  
-  
-Обновляем страницу и видим, что ссылка стала подчеркиваться волнистой линией.
-  
-![](/screenshots/cicd4.png)
-  
-Описание действий, которые делает раннер, в комментариях в файле `.gitlab-ci.yml`
