@@ -18,22 +18,22 @@ terraform workspace list
 
 При запуске `terraform apply`.  
 Cоздаются записи в зоне amabam.ru (сделегирована на NS yandex):  
- - dns.tf
-Создаются сети/подсети:
- - network.tf
+ - dns.tf  
+Создаются сети/подсети:  
+ - network.tf  
 ВМ создаются набором скриптов:  
- - proxy.tf - прокси на nginx
- - app.tf - wordpress
- - git.tf - gitlab
- - monitoring.tf - стек мониторинга
- - mysql.tf - БД
+ - proxy.tf - прокси на nginx  
+ - app.tf - wordpress  
+ - git.tf - gitlab  
+ - monitoring.tf - стек мониторинга  
+ - mysql.tf - БД  
 Настойки провайдера и некоторые переменные вынесены в:  
- - provider.tf
- - variables.tf
+ - provider.tf  
+ - variables.tf  
 Блок настроек и вызов ansible:  
- - ansible.tf
- - inventory.tf
- - hosts.tf
+ - ansible.tf  
+ - inventory.tf  
+ - hosts.tf  
 
 ## Ansible
 Вся конфигурация расположена в [./ansible](./ansible).  
