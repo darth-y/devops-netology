@@ -3,10 +3,10 @@
 127.0.0.1  localhost
 ::1        localhost ip6-localhost ip6-loopback
 
-192.168.201.10  nl-nginx nginx
-192.168.201.21  nl-db01
-192.168.201.22  nl-db02
-192.168.201.30   nl-app
-192.168.201.40    nl-gitlab
-192.168.201.50    nl-monitoring
+192.168.101.10  nl-nginx nginx
+192.168.101.21  nl-db01
+192.168.101.22  nl-db02
+192.168.101.30   nl-app
+192.168.101.40    nl-gitlab
+192.168.101.50    nl-monitoring
 

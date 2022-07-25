@@ -6,37 +6,37 @@ all:
     proxy:
       hosts:
         amabam.amabam.ru:
-          ansible_host: 84.201.161.106
+          ansible_host: 51.250.74.19
           ansible_ssh_extra_args: "-o StrictHostKeyChecking=no"
-          letsencrypt_staging: true
+          letsencrypt_staging: false
     db:
       hosts:
         nl-db01.amabam.ru:
-          ansible_host: 192.168.201.21
-          ansible_ssh_extra_args: "-o StrictHostKeyChecking=no -J ubuntu@84.201.161.106"
+          ansible_host: 192.168.101.21
+          ansible_ssh_extra_args: "-o StrictHostKeyChecking=no -J ubuntu@51.250.74.19"
           mysql_replication_role: 'master'
         nl-db02.amabam.ru:
-          ansible_host: 192.168.201.22
-          ansible_ssh_extra_args: "-o StrictHostKeyChecking=no -J ubuntu@84.201.161.106"
+          ansible_host: 192.168.101.22
+          ansible_ssh_extra_args: "-o StrictHostKeyChecking=no -J ubuntu@51.250.74.19"
           mysql_replication_role: 'slave'
 
     app:
       hosts:
         nl-app.amabam.ru:
-          ansible_host: 192.168.201.30
-          ansible_ssh_extra_args: "-o StrictHostKeyChecking=no -J ubuntu@84.201.161.106"
+          ansible_host: 192.168.101.30
+          ansible_ssh_extra_args: "-o StrictHostKeyChecking=no -J ubuntu@51.250.74.19"
 
     git:
       hosts:
         nl-gitlab.amabam.ru:
-          ansible_host: 192.168.201.40
-          ansible_ssh_extra_args: "-o StrictHostKeyChecking=no -J ubuntu@84.201.161.106"
+          ansible_host: 192.168.101.40
+          ansible_ssh_extra_args: "-o StrictHostKeyChecking=no -J ubuntu@51.250.74.19"
 
     monitoring:
       hosts:
         nl-monitoring.amabam.ru:
-          ansible_host: 192.168.201.50
-          ansible_ssh_extra_args: "-o StrictHostKeyChecking=no -J ubuntu@84.201.161.106"
+          ansible_host: 192.168.101.50
+          ansible_ssh_extra_args: "-o StrictHostKeyChecking=no -J ubuntu@51.250.74.19"
   vars:
     virtual_domain: amabam.ru
     ansible_user: ubuntu

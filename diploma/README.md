@@ -141,6 +141,19 @@ $ ansible-playbook -i inventory.yml -l app ../git-conf/prepare.yml
  - https://grafana.com/docs/
  - https://prometheus.io/docs/visualization/grafana/
 
+### Доставка изменений приложения (сайт на Wordpress)
+Цель: Исключить ручной труд при доставке изменений в содержимом сайта.  
+Для достижения данной цели был настроен процесс Gitlab CI с одним активным gitlab-runner, развёрнутым на ВМ с wordpress.  
+При обновлении репозитория запускается задача pipeline.  
+Runner загрузит обновления wordpress плагинов, а также изменения, произведённые в репозитории.  
+Используя [Wordpress CLI](https://wp-cli.org/) активирует обновлённые плагины и тему сайта.  
+![](scrns/18_git_pipe.png)
+
+При выполнении этого этапа постоянно использовались следующие ресурсы:
+ - https://wp-cli.org/
+ - https://www.dmosk.ru/miniinstruktions.php?mini=gitlab-runner-web
+ - https://habr.com/en/post/498436/
+
 ## Скриншоты работы систем
 ### Мониторинг
 #### Grafana
